@@ -19,6 +19,7 @@ SIGNATURE_TYPES = {
 }
 
 TYPE_SIGNATURES = dict(zip(SIGNATURE_TYPES.values(), SIGNATURE_TYPES.keys()))
+EVENT_TYPES = SIGNATURE_TYPES.values()
 
 # Source: https://www.nintoracaudio.dev/data-eng,python/2024/11/06/tar-stream
 def iter_tar_gz(file_path):
@@ -29,7 +30,6 @@ def iter_tar_gz(file_path):
         f = tfile.extractfile(t)
         yield path, f
 
-
 def pool_data_reader():
     for year in YEARS:
         archive_path = f"data/pool_events_{year}.tar.gz"
@@ -39,3 +39,7 @@ def pool_data_reader():
             for event_string in file_content.splitlines(): # each line is a Uniswap pool event
                 event = json.loads(event_string)
                 yield event
+
+def get_event_type(event):
+    signature = event['topics'][0]
+    return SIGNATURE_TYPES[signature]
