@@ -1,5 +1,7 @@
-__pycache__/
+__pycache__
+.env
 data/*.tsv
 data/*.tar.gz
-results/*.tsv
-results/*.gz
+logs
+results
+unused
